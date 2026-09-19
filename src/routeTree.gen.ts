@@ -10,33 +10,83 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ShellRouteImport } from './routes/_shell'
+import { Route as ShellDoctorRouteImport } from './routes/_shell.doctor'
+import { Route as ShellLaboratoryRouteImport } from './routes/_shell.laboratory'
+import { Route as ShellNurseRouteImport } from './routes/_shell.nurse'
+import { Route as ShellReceptionRouteImport } from './routes/_shell.reception'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ShellRoute = ShellRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShellDoctorRoute = ShellDoctorRouteImport.update({
+  id: '/doctor',
+  path: '/doctor',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellLaboratoryRoute = ShellLaboratoryRouteImport.update({
+  id: '/laboratory',
+  path: '/laboratory',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellNurseRoute = ShellNurseRouteImport.update({
+  id: '/nurse',
+  path: '/nurse',
+  getParentRoute: () => ShellRoute,
+} as any)
+const ShellReceptionRoute = ShellReceptionRouteImport.update({
+  id: '/reception',
+  path: '/reception',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/doctor': typeof ShellDoctorRoute
+  '/laboratory': typeof ShellLaboratoryRoute
+  '/nurse': typeof ShellNurseRoute
+  '/reception': typeof ShellReceptionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/doctor': typeof ShellDoctorRoute
+  '/laboratory': typeof ShellLaboratoryRoute
+  '/nurse': typeof ShellNurseRoute
+  '/reception': typeof ShellReceptionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_shell': typeof ShellRouteWithChildren
+  '/_shell/doctor': typeof ShellDoctorRoute
+  '/_shell/laboratory': typeof ShellLaboratoryRoute
+  '/_shell/nurse': typeof ShellNurseRoute
+  '/_shell/reception': typeof ShellReceptionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception'
+  id:
+    | '__root__'
+    | '/'
+    | '/_shell'
+    | '/_shell/doctor'
+    | '/_shell/laboratory'
+    | '/_shell/nurse'
+    | '/_shell/reception'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ShellRoute: typeof ShellRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +98,63 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_shell': {
+      id: '/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ShellRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_shell/doctor': {
+      id: '/_shell/doctor'
+      path: '/doctor'
+      fullPath: '/doctor'
+      preLoaderRoute: typeof ShellDoctorRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/laboratory': {
+      id: '/_shell/laboratory'
+      path: '/laboratory'
+      fullPath: '/laboratory'
+      preLoaderRoute: typeof ShellLaboratoryRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/nurse': {
+      id: '/_shell/nurse'
+      path: '/nurse'
+      fullPath: '/nurse'
+      preLoaderRoute: typeof ShellNurseRouteImport
+      parentRoute: typeof ShellRoute
+    }
+    '/_shell/reception': {
+      id: '/_shell/reception'
+      path: '/reception'
+      fullPath: '/reception'
+      preLoaderRoute: typeof ShellReceptionRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
+interface ShellRouteChildren {
+  ShellDoctorRoute: typeof ShellDoctorRoute
+  ShellLaboratoryRoute: typeof ShellLaboratoryRoute
+  ShellNurseRoute: typeof ShellNurseRoute
+  ShellReceptionRoute: typeof ShellReceptionRoute
+}
+
+const ShellRouteChildren: ShellRouteChildren = {
+  ShellDoctorRoute: ShellDoctorRoute,
+  ShellLaboratoryRoute: ShellLaboratoryRoute,
+  ShellNurseRoute: ShellNurseRoute,
+  ShellReceptionRoute: ShellReceptionRoute,
+}
+
+const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ShellRoute: ShellRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
