@@ -33,7 +33,7 @@ export function Label({ children, className }: { children: ReactNode; className?
   return <div className={cn("mono-label", className)}>{children}</div>;
 }
 
-export function Avatar({ initials, className, src, alt }: { initials: string; className?: string; src?: string; alt?: string }) {
+export function Avatar({ initials, className, src, alt }: { initials: string; className?: string; src?: string | undefined; alt?: string }) {
   if (src) {
     return <img src={src} alt={alt ?? initials} className={cn("size-9 rounded-md object-cover", className)} />;
   }
