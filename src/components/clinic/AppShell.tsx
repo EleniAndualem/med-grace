@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
-import { ROLE_META, logout, type Role, type StaffUser } from "@/lib/auth";
+import { logout, type StaffUser } from "@/lib/auth";
 import { TEAM } from "@/lib/clinic-data";
 import { Avatar, Button, Dot, Label } from "./ui";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,6 @@ interface Props {
   children: ReactNode;
 }
 
-const ROLE_ORDER: Role[] = ["doctor", "nurse", "laboratory", "reception"];
 
 function Clock() {
   const [now, setNow] = useState<string>("");
@@ -51,30 +50,13 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
         {/* SIDEBAR */}
         <aside className="flex w-[248px] shrink-0 flex-col border-r bg-card">
           <div className="flex h-16 items-center gap-2.5 border-b px-5">
-            <div className="grid size-8 place-items-center rounded-md bg-primary font-display text-sm font-bold text-primary-foreground">M</div>
+            <div className="grid size-8 place-items-center rounded-md bg-primary font-display text-sm font-bold text-primary-foreground">A</div>
             <div className="leading-tight">
-              <div className="font-display text-[15px] font-bold tracking-tight">Meridian</div>
-              <div className="font-mono text-[10px] tracking-wide text-muted-foreground">CLINIC OS</div>
+              <div className="font-display text-[15px] font-bold tracking-tight">Afomia</div>
+              <div className="font-mono text-[10px] tracking-wide text-muted-foreground">MEDICAL CLINIC</div>
             </div>
           </div>
 
-          <div className="px-4 pt-4">
-            <Label className="mb-2 px-1">Role</Label>
-            <div className="grid grid-cols-4 gap-1 rounded-lg border bg-background p-1">
-              {ROLE_ORDER.map((r) => (
-                <div
-                  key={r}
-                  title={r === user.role ? "Your role" : `${ROLE_META[r].label} — sign in with a ${ROLE_META[r].label.toLowerCase()} account`}
-                  className={cn(
-                    "rounded-md py-1.5 text-center text-[11px] font-medium",
-                    r === user.role ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground/70",
-                  )}
-                >
-                  {ROLE_META[r].short}
-                </div>
-              ))}
-            </div>
-          </div>
 
           <nav className="mt-4 space-y-0.5 px-3">
             <Label className="mb-1 px-2">Workspace</Label>
