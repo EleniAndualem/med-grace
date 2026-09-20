@@ -49,7 +49,7 @@ export function Avatar({ initials, className, src, alt }: { initials: string; cl
   );
 }
 
-export function Tile({ label, value, unit, flag, className }: { label: string; value: ReactNode; unit?: string; flag?: boolean; className?: string }) {
+export function Tile({ label, value, unit, flag, className }: { label: string; value: ReactNode; unit?: string; flag?: boolean | undefined; className?: string }) {
   return (
     <div className={cn("rounded-lg border bg-background/50 px-3 py-2.5", className)}>
       <div className="font-mono text-[10px] text-muted-foreground">{label}</div>
