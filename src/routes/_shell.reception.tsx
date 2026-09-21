@@ -8,9 +8,9 @@ import { getSession, STAFF } from "@/lib/auth";
 export const Route = createFileRoute("/_shell/reception")({
   head: () => ({
     meta: [
-      { title: "Reception workspace — Meridian Clinic OS" },
+      { title: "Reception workspace — Afomia Medical Clinic" },
       { name: "description", content: "Check-in, appointments and patient registration." },
-      { property: "og:title", content: "Reception workspace — Meridian Clinic OS" },
+      { property: "og:title", content: "Reception workspace — Afomia Medical Clinic" },
       { property: "og:description", content: "Check-in, appointments and patient registration." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

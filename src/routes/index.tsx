@@ -7,10 +7,11 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Sign in — Meridian Clinic OS" },
-      { name: "description", content: "Staff sign-in for Meridian Clinic. Reception, nurse, laboratory and doctor workspaces." },
-      { property: "og:title", content: "Sign in — Meridian Clinic OS" },
-      { property: "og:description", content: "Staff sign-in for Meridian Clinic. Reception, nurse, laboratory and doctor workspaces." },
+      { title: "Sign in — Afomia Medical Clinic" },
+      { name: "description", content: "Staff sign-in for Afomia Medical Clinic. Reception, nurse, laboratory and doctor workspaces." },
+      { property: "og:title", content: "Sign in — Afomia Medical Clinic" },
+      { property: "og:description", content: "Staff sign-in for Afomia Medical Clinic. Reception, nurse, laboratory and doctor workspaces." },
+
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -60,11 +61,12 @@ function LoginPage() {
             <div className="sweep absolute top-[-20%] bottom-[-20%] w-1/3 bg-gradient-to-r from-transparent via-card/70 to-transparent" />
           </div>
           <div className="relative flex items-center gap-2.5">
-            <div className="grid size-9 place-items-center rounded-md bg-primary font-display text-[15px] font-bold text-primary-foreground">M</div>
+            <div className="grid size-9 place-items-center rounded-md bg-primary font-display text-[15px] font-bold text-primary-foreground">A</div>
             <div className="leading-tight">
-              <div className="font-display text-[16px] font-bold tracking-tight">Meridian</div>
-              <div className="font-mono text-[10px] tracking-wide text-muted-foreground">CLINIC OS</div>
+              <div className="font-display text-[16px] font-bold tracking-tight">Afomia</div>
+              <div className="font-mono text-[10px] tracking-wide text-muted-foreground">MEDICAL CLINIC</div>
             </div>
+
           </div>
 
           <div className="relative">
