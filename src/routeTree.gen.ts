@@ -15,6 +15,7 @@ import { Route as ShellDoctorRouteImport } from './routes/_shell.doctor'
 import { Route as ShellLaboratoryRouteImport } from './routes/_shell.laboratory'
 import { Route as ShellNurseRouteImport } from './routes/_shell.nurse'
 import { Route as ShellReceptionRouteImport } from './routes/_shell.reception'
+import { Route as ShellRecordsRouteImport } from './routes/_shell.records'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -45,6 +46,11 @@ const ShellReceptionRoute = ShellReceptionRouteImport.update({
   path: '/reception',
   getParentRoute: () => ShellRoute,
 } as any)
+const ShellRecordsRoute = ShellRecordsRouteImport.update({
+  id: '/records',
+  path: '/records',
+  getParentRoute: () => ShellRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/laboratory': typeof ShellLaboratoryRoute
   '/nurse': typeof ShellNurseRoute
   '/reception': typeof ShellReceptionRoute
+  '/records': typeof ShellRecordsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/laboratory': typeof ShellLaboratoryRoute
   '/nurse': typeof ShellNurseRoute
   '/reception': typeof ShellReceptionRoute
+  '/records': typeof ShellRecordsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -68,12 +76,14 @@ export interface FileRoutesById {
   '/_shell/laboratory': typeof ShellLaboratoryRoute
   '/_shell/nurse': typeof ShellNurseRoute
   '/_shell/reception': typeof ShellReceptionRoute
+  '/_shell/records': typeof ShellRecordsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception'
+  fullPaths:
+    '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception' | '/records'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception'
+  to: '/' | '/doctor' | '/laboratory' | '/nurse' | '/reception' | '/records'
   id:
     | '__root__'
     | '/'
@@ -82,6 +92,7 @@ export interface FileRouteTypes {
     | '/_shell/laboratory'
     | '/_shell/nurse'
     | '/_shell/reception'
+    | '/_shell/records'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -133,6 +144,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShellReceptionRouteImport
       parentRoute: typeof ShellRoute
     }
+    '/_shell/records': {
+      id: '/_shell/records'
+      path: '/records'
+      fullPath: '/records'
+      preLoaderRoute: typeof ShellRecordsRouteImport
+      parentRoute: typeof ShellRoute
+    }
   }
 }
 
@@ -141,6 +159,7 @@ interface ShellRouteChildren {
   ShellLaboratoryRoute: typeof ShellLaboratoryRoute
   ShellNurseRoute: typeof ShellNurseRoute
   ShellReceptionRoute: typeof ShellReceptionRoute
+  ShellRecordsRoute: typeof ShellRecordsRoute
 }
 
 const ShellRouteChildren: ShellRouteChildren = {
@@ -148,6 +167,7 @@ const ShellRouteChildren: ShellRouteChildren = {
   ShellLaboratoryRoute: ShellLaboratoryRoute,
   ShellNurseRoute: ShellNurseRoute,
   ShellReceptionRoute: ShellReceptionRoute,
+  ShellRecordsRoute: ShellRecordsRoute,
 }
 
 const ShellRouteWithChildren = ShellRoute._addFileChildren(ShellRouteChildren)
