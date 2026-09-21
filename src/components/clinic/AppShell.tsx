@@ -129,9 +129,9 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
                 <div key={t.name} className="flex items-center gap-2">
                   <Dot className={t.tone} />
                   <span className="text-[11px] font-medium">{t.name}</span>
-                  <span className="ml-auto font-mono text-[10px] text-muted-foreground">{t.role}</span>
                 </div>
               ))}
+
             </div>
           </div>
         </aside>
