@@ -10,9 +10,9 @@ import { getSession, STAFF } from "@/lib/auth";
 export const Route = createFileRoute("/_shell/doctor")({
   head: () => ({
     meta: [
-      { title: "Doctor workspace — Meridian Clinic OS" },
+      { title: "Doctor workspace — Afomia Medical Clinic" },
       { name: "description", content: "Today's consultation queue, vitals, pending labs and notes." },
-      { property: "og:title", content: "Doctor workspace — Meridian Clinic OS" },
+      { property: "og:title", content: "Doctor workspace — Afomia Medical Clinic" },
       { property: "og:description", content: "Today's consultation queue, vitals, pending labs and notes." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

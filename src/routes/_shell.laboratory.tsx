@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/_shell/laboratory")({
   head: () => ({
     meta: [
-      { title: "Laboratory workspace — Meridian Clinic OS" },
+      { title: "Laboratory workspace — Afomia Medical Clinic" },
       { name: "description", content: "Lab worklist, sample tracking and result entry." },
-      { property: "og:title", content: "Laboratory workspace — Meridian Clinic OS" },
+      { property: "og:title", content: "Laboratory workspace — Afomia Medical Clinic" },
       { property: "og:description", content: "Lab worklist, sample tracking and result entry." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
