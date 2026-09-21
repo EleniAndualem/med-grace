@@ -77,11 +77,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Meridian Clinic OS" },
+      { title: "Afomia Medical Clinic" },
       { name: "description", content: "Clinic management for reception, nursing, laboratory and doctors." },
-      { name: "author", content: "Meridian" },
-      { property: "og:title", content: "Meridian Clinic OS" },
+      { name: "author", content: "Afomia Medical Clinic" },
+      { property: "og:title", content: "Afomia Medical Clinic" },
       { property: "og:description", content: "Clinic management for reception, nursing, laboratory and doctors." },
+
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
