@@ -3,8 +3,9 @@ import { useState } from "react";
 import { AppShell } from "@/components/clinic/AppShell";
 import { QueuePanel } from "@/components/clinic/Queue";
 import { PatientHeader } from "@/components/clinic/PatientHeader";
-import { Button, Label, StatusPill, Tile } from "@/components/clinic/ui";
-import { PATIENTS } from "@/lib/clinic-data";
+import { Button, Field, Input, Label, StatusPill, Tile } from "@/components/clinic/ui";
+import { updatePatient, usePatients } from "@/lib/patients";
+import { addEntry } from "@/lib/records";
 import { getSession, STAFF } from "@/lib/auth";
 
 export const Route = createFileRoute("/_shell/doctor")({
@@ -25,16 +26,38 @@ const LAB_TONE = { Queued: "wait", Processing: "lab", Resulted: "done" } as cons
 
 function DoctorPage() {
   const user = getSession() ?? STAFF[3]!;
-  const [selectedId, setSelectedId] = useState("p3");
+  const patients = usePatients();
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const patient = patients.find((p) => p.id === selectedId) ?? patients.find((p) => p.status === "doctor") ?? patients[0]!;
   const [note, setNote] = useState<Record<string, string>>({});
-  const patient = PATIENTS.find((p) => p.id === selectedId)!;
+  const [rx, setRx] = useState<Record<string, { drug: string; dose: string }>>({});
+  const [filed, setFiled] = useState<Record<string, boolean>>({});
   const noteValue = note[patient.id] ?? patient.note ?? "";
+  const rxValue = rx[patient.id] ?? { drug: "", dose: "" };
 
   const counts = {
-    waiting: PATIENTS.filter((p) => p.status === "waiting").length,
-    lab: PATIENTS.filter((p) => p.status === "lab").length,
-    done: PATIENTS.filter((p) => p.status === "done").length,
+    waiting: patients.filter((p) => p.status === "waiting").length,
+    lab: patients.filter((p) => p.status === "lab").length,
+    done: patients.filter((p) => p.status === "done").length,
   };
+
+  function complete() {
+    const text = noteValue.trim();
+    if (text) {
+      addEntry(patient.id, { kind: "note", author: user.name, title: "Consultation note", detail: text });
+      updatePatient(patient.id, { note: text });
+    }
+    if (rxValue.drug.trim()) {
+      addEntry(patient.id, {
+        kind: "prescription",
+        author: user.name,
+        title: rxValue.drug.trim(),
+        fields: [{ label: "Directions", value: rxValue.dose.trim() || "As directed" }],
+      });
+    }
+    updatePatient(patient.id, { status: "done" });
+    setFiled({ ...filed, [patient.id]: true });
+  }
 
   return (
     <AppShell
@@ -43,13 +66,13 @@ function DoctorPage() {
       nav={["Today's queue", "Patients", "Lab results", "Scheduling", "Reports"]}
       primaryAction="New visit"
       stats={[
-        { label: "Patients today", value: 24 },
+        { label: "Patients today", value: patients.length },
         { label: "Waiting", value: counts.waiting, tone: "bg-wait" },
         { label: "Lab pending", value: counts.lab, tone: "bg-lab" },
-        { label: "Completed", value: 11 + counts.done, tone: "bg-done" },
+        { label: "Completed", value: counts.done, tone: "bg-done" },
       ]}
     >
-      <QueuePanel patients={PATIENTS} selectedId={selectedId} onSelect={setSelectedId} />
+      <QueuePanel patients={patients} selectedId={patient.id} onSelect={setSelectedId} total={patients.length} />
 
       <aside key={patient.id} className="slidein flex w-[380px] shrink-0 flex-col overflow-hidden rounded-xl border bg-card">
         <PatientHeader patient={patient} />
@@ -101,14 +124,40 @@ function DoctorPage() {
             <Label className="mb-2">Consultation note</Label>
             <textarea
               value={noteValue}
+              maxLength={2000}
               onChange={(e) => setNote({ ...note, [patient.id]: e.target.value })}
               placeholder="Findings, assessment, plan…"
               className="min-h-[88px] w-full resize-none rounded-lg border bg-background/40 px-3 py-2.5 text-[12px] leading-relaxed outline-none focus:border-ring focus:bg-card focus:ring-2 focus:ring-ring/25"
             />
           </div>
 
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Prescription">
+              <Input
+                value={rxValue.drug}
+                maxLength={80}
+                placeholder="Amoxicillin 500 mg"
+                onChange={(e) => setRx({ ...rx, [patient.id]: { ...rxValue, drug: e.target.value } })}
+              />
+            </Field>
+            <Field label="Directions">
+              <Input
+                value={rxValue.dose}
+                maxLength={80}
+                placeholder="1 tab TDS × 5 days"
+                onChange={(e) => setRx({ ...rx, [patient.id]: { ...rxValue, dose: e.target.value } })}
+              />
+            </Field>
+          </div>
+
+          {filed[patient.id] && (
+            <div className="rounded-md border border-done/25 bg-done/10 px-3 py-2 font-mono text-[11px] text-done">
+              Filed to the patient record
+            </div>
+          )}
+
           <div className="flex gap-2 pt-1">
-            <Button className="flex-1">Save &amp; complete</Button>
+            <Button className="flex-1" onClick={complete}>Save &amp; complete</Button>
             <Button variant="outline">Order more</Button>
           </div>
         </div>
