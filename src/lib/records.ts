@@ -188,11 +188,14 @@ function load(): Record<string, PatientRecord> {
 }
 
 function persist() {
-  if (typeof window === "undefined" || !state) return;
-  try {
-    window.localStorage.setItem(KEY, JSON.stringify(state));
-  } catch {
-    /* quota — ignore */
+  if (!state) return;
+  state = { ...state };
+  if (typeof window !== "undefined") {
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+    } catch {
+      /* quota — ignore */
+    }
   }
   listeners.forEach((l) => l());
 }
@@ -234,5 +237,30 @@ export function countBy(rec: PatientRecord, kind: EntryKind): number {
 
 export function resetRecords() {
   state = seed();
+  persist();
+}
+
+/** Opens a new patient file (used by reception intake). */
+export function createRecord(p: {
+  patientId: string;
+  mrn: string;
+  name: string;
+  age: number;
+  sex: "M" | "F";
+  conditions?: string[];
+  allergy?: string;
+}) {
+  const all = load();
+  if (all[p.patientId]) return;
+  all[p.patientId] = {
+    patientId: p.patientId,
+    mrn: p.mrn,
+    name: p.name,
+    age: p.age,
+    sex: p.sex,
+    conditions: p.conditions ?? [],
+    ...(p.allergy ? { allergy: p.allergy } : {}),
+    entries: [],
+  };
   persist();
 }

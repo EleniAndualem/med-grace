@@ -24,6 +24,7 @@ export interface Patient {
   labs: { test: string; status: "Queued" | "Processing" | "Resulted"; result?: string; flag?: "high" | "low" }[];
   note?: string;
   photo?: boolean;
+  contact?: string;
 }
 
 export const PATIENTS: Patient[] = [

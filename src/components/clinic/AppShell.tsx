@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { logout, type StaffUser } from "@/lib/auth";
 import { TEAM } from "@/lib/clinic-data";
@@ -74,6 +74,15 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
                 <Dot className={i === active ? "bg-primary" : "bg-border"} /> {item}
               </button>
             ))}
+
+            <Label className="mt-4 mb-1 px-2">Clinic</Label>
+            <Link
+              to="/records"
+              activeProps={{ className: "border border-primary/20 bg-primary/10 font-medium text-accent-ink" }}
+              className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-left text-[13px] text-muted-foreground transition-colors hover:bg-background"
+            >
+              <Dot className="bg-border" /> Patient records
+            </Link>
           </nav>
 
           <div className="mt-auto border-t p-3">
