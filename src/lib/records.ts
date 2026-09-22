@@ -188,11 +188,14 @@ function load(): Record<string, PatientRecord> {
 }
 
 function persist() {
-  if (typeof window === "undefined" || !state) return;
-  try {
-    window.localStorage.setItem(KEY, JSON.stringify(state));
-  } catch {
-    /* quota — ignore */
+  if (!state) return;
+  state = { ...state };
+  if (typeof window !== "undefined") {
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+    } catch {
+      /* quota — ignore */
+    }
   }
   listeners.forEach((l) => l());
 }
