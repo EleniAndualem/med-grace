@@ -239,3 +239,28 @@ export function resetRecords() {
   state = seed();
   persist();
 }
+
+/** Opens a new patient file (used by reception intake). */
+export function createRecord(p: {
+  patientId: string;
+  mrn: string;
+  name: string;
+  age: number;
+  sex: "M" | "F";
+  conditions?: string[];
+  allergy?: string;
+}) {
+  const all = load();
+  if (all[p.patientId]) return;
+  all[p.patientId] = {
+    patientId: p.patientId,
+    mrn: p.mrn,
+    name: p.name,
+    age: p.age,
+    sex: p.sex,
+    conditions: p.conditions ?? [],
+    ...(p.allergy ? { allergy: p.allergy } : {}),
+    entries: [],
+  };
+  persist();
+}
