@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppShell } from "@/components/clinic/AppShell";
 import { Button, Dot, Field, Input, Label, StatusPill } from "@/components/clinic/ui";
+import type { Patient } from "@/lib/clinic-data";
 import { updatePatient, usePatients } from "@/lib/patients";
 import { addEntry } from "@/lib/records";
 import { getSession, STAFF } from "@/lib/auth";
