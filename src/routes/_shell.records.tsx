@@ -62,7 +62,7 @@ function RecordsPage() {
     <AppShell
       user={user}
       title="Patient Records"
-      nav={["Patient records", "Archive", "Reports"]}
+      nav={["All files", "Archive", "Reports"]}
       stats={[
         { label: "Patient files", value: list.length },
         { label: "Entries stored", value: totalEntries, tone: "bg-doctor" },
@@ -131,7 +131,7 @@ function RecordsPage() {
               <div className="mt-4 grid grid-cols-4 gap-2">
                 {(["visit", "lab", "prescription", "vitals"] as EntryKind[]).map((k) => (
                   <div key={k} className="rounded-lg border bg-background/50 px-3 py-2">
-                    <div className="font-mono text-[10px] text-muted-foreground">{KIND_META[k].label}s</div>
+                    <div className="font-mono text-[10px] text-muted-foreground">{KIND_META[k].label.endsWith("s") ? KIND_META[k].label : KIND_META[k].label + "s"}</div>
                     <div className="font-display text-[18px] font-bold tabular-nums">{countBy(rec, k)}</div>
                   </div>
                 ))}
