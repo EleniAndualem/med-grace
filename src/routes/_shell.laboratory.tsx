@@ -40,9 +40,9 @@ function LabPage() {
     const flagRaw = String(f.get("flag") ?? "Normal");
     const comment = String(f.get("comment") ?? "").trim();
     if (!value) return;
-    const flag = flagRaw === "High" ? "high" : flagRaw === "Low" ? "low" : undefined;
+    const flag: "high" | "low" | undefined = flagRaw === "High" ? "high" : flagRaw === "Low" ? "low" : undefined;
 
-    const labs = order.patient.labs.map((l, i) =>
+    const labs: Patient["labs"] = order.patient.labs.map((l, i) =>
       i === order.index ? { ...l, status: "Resulted" as const, result: value, ...(flag ? { flag } : {}) } : l,
     );
     updatePatient(order.patient.id, { labs });
