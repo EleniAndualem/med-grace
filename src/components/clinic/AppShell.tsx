@@ -45,10 +45,10 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-background font-sans text-foreground">
+    <div className="sky-backdrop h-screen overflow-hidden font-sans text-foreground">
       <div className="flex h-full">
         {/* SIDEBAR */}
-        <aside className="flex w-[248px] shrink-0 flex-col border-r bg-card">
+        <aside className="flex w-[232px] shrink-0 flex-col border-r bg-card/90 backdrop-blur-xl">
           <div className="flex h-16 items-center gap-2.5 border-b px-5">
             <div className="grid size-8 place-items-center rounded-md bg-primary font-display text-sm font-bold text-primary-foreground">A</div>
             <div className="leading-tight">
@@ -101,7 +101,7 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
 
         {/* MAIN */}
         <main className="flex min-w-0 flex-1 flex-col">
-          <header className="flex h-16 shrink-0 items-center justify-between border-b bg-card/70 px-6 backdrop-blur-sm">
+          <header className="flex h-16 shrink-0 items-center justify-between border-b bg-card/75 px-6 backdrop-blur-xl">
             <div className="flex items-center gap-3">
               <h1 className="font-display text-[19px] font-bold tracking-tight">{title}</h1>
               <Clock />
@@ -119,10 +119,10 @@ export function AppShell({ user, title, nav, stats, primaryAction, children }: P
         </main>
 
         {/* RIGHT STAT RAIL */}
-        <aside className="flex w-[220px] shrink-0 flex-col gap-3 border-l bg-card p-4">
+        <aside className="hidden w-[210px] shrink-0 flex-col gap-3 border-l bg-card/85 p-4 backdrop-blur-xl xl:flex">
           <Label>Today</Label>
           {stats.map((s, i) => (
-            <div key={s.label} className="rise rounded-lg border bg-background/40 px-3 py-3" style={{ animationDelay: `${60 * (i + 1)}ms` }}>
+            <div key={s.label} className="rise rounded-lg border bg-background/65 px-3 py-3 shadow-[var(--shadow-tile)]" style={{ animationDelay: `${60 * (i + 1)}ms` }}>
               <div className="flex items-center gap-1.5">
                 {s.tone && <Dot className={s.tone} />}
                 <span className="font-mono text-[10px] text-muted-foreground">{s.label}</span>

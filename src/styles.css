@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Meridian Clinic OS — design system
+ * Afomia Medical Clinic — design system
  * "Operating theatre glass": calm sky-blue accent, crisp 1px lines,
  * Space Grotesk display / IBM Plex Sans body / IBM Plex Mono labels.
  */
@@ -87,6 +87,9 @@
   --status-alert: oklch(0.6 0.2 25);
 
   --shadow-panel: 0 1px 2px oklch(0.3 0.03 245 / 4%), 0 8px 24px -12px oklch(0.3 0.03 245 / 12%);
+  --shadow-elite: 0 24px 70px -28px oklch(0.35 0.09 240 / 28%), 0 2px 8px oklch(0.3 0.03 245 / 5%);
+  --shadow-button: 0 10px 24px -12px oklch(0.45 0.13 240 / 55%);
+  --shadow-tile: 0 8px 22px -18px oklch(0.3 0.03 245 / 24%);
   --gradient-glass: linear-gradient(180deg, oklch(1 0 0 / 70%), oklch(1 0 0 / 30%));
   --gradient-sky: radial-gradient(1200px 600px at 10% -10%, oklch(0.85 0.08 230 / 60%), transparent 60%),
     radial-gradient(900px 500px at 100% 110%, oklch(0.8 0.1 240 / 45%), transparent 60%);
@@ -131,6 +134,19 @@
 @utility sky-backdrop {
   background-color: var(--color-background);
   background-image: var(--gradient-sky);
+}
+
+@utility clinical-grid {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.38;
+    background-image: linear-gradient(to right, var(--color-border) 1px, transparent 1px), linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  }
 }
 
 @utility rise {
