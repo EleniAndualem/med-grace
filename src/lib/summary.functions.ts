@@ -8,7 +8,7 @@ const Input = z.object({
 
 const SYSTEM = `You are a clinical documentation assistant. Turn a doctor's free-text notes into a concise clinical summary.
 Use these short headed sections (omit any with no information): Presenting complaint, Key findings, Assessment, Plan, Follow-up.
-Use brief bullet points, standard clinical abbreviations, under 150 words total. Do not invent facts not in the notes.`;
+Use brief bullet points, standard clinical abbreviations, under 150 words total. Plain text only: write section names followed by a colon, bullets starting with "- ", no markdown symbols like # or *. Do not invent facts not in the notes.`;
 
 export const summarizeNotes = createServerFn({ method: "POST" })
   .inputValidator((d: unknown) => Input.parse(d))
